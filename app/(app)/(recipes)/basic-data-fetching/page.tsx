@@ -1,62 +1,73 @@
-import dedent from "dedent";
 import { Frame } from "../_components/frame";
+import Markdoc from "@markdoc/markdoc";
+import path from "node:path";
+import fs from "node:fs/promises";
+import yaml from "js-yaml";
+import * as z from "zod";
+import React from "react";
+import { codeToHtml } from "shiki";
 
-export default function Page() {
+export default async function Page() {
+  // "use cache";
+
+  const filePath = path.join(
+    process.cwd(),
+    "app",
+    "demos",
+    "basic-data-fetching",
+    "summary.md",
+  );
+  const doc = await fs.readFile(filePath, "utf8");
+  const ast = Markdoc.parse(doc);
+  const content = Markdoc.transform(ast, {
+    nodes: {
+      fence: {
+        render: "CodeFence",
+        attributes: {
+          content: { type: String },
+          language: { type: String },
+        },
+      },
+    },
+  });
+
+  const frontmatter = z
+    .object({ title: z.string(), description: z.string() })
+    .parse(
+      ast.attributes.frontmatter ? yaml.load(ast.attributes.frontmatter) : {},
+    );
+
+  const summary = Markdoc.renderers.react(content, React, {
+    components: {
+      CodeFence,
+    },
+  });
+
   return (
     <div>
       <h1 className="text-2xl font-semibold tracking-tight">
-        Basic data fetching
+        {frontmatter.title}
       </h1>
-      <p className="mt-2 text-lg text-gray-700">
-        Use Server Components and Suspense for a fast initial render, followed
-        by streaming dynamic data.
-      </p>
+      <p className="mt-2 text-lg text-gray-700">{frontmatter.description}</p>
 
       <Frame src="/demos/basic-data-fetching" />
 
-      <div className="prose my-20">
-        <p>
-          In Next.js 16, calling async functions in Server Components is the
-          primary way you fetch data:
-        </p>
-
-        <pre>
-          {dedent`
-            export async function Page() {
-              await getPosts()
-
-              // ...
-            }
-          `}
-        </pre>
-
-        <p>
-          With Cache Components, Next will ensure that your data-fetching
-          components don&apos;t fully block your routes by enforcing that you
-          provide some static fallback content with Suspense:
-        </p>
-
-        <pre>
-          {dedent`
-            export async function Page() {
-              return (
-                <Suspense fallback={<Spinner />}>
-                  <Posts />
-                </Suspense>
-              )
-            }
-          `}
-        </pre>
-
-        <p>
-          This gives your app a fast initial boot—as fast as you&apos;d get with
-          a traditional SSG or JAMstack approach, since it can be served from a
-          CDN—while <em>still</em> getting to fetch your dynamic data on the
-          server as part of the initial request.
-        </p>
-
-        <p>No client-side data fetching library or API routes needed.</p>
-      </div>
+      <div className="prose my-20">{summary}</div>
     </div>
   );
+}
+
+async function CodeFence({
+  content,
+  language,
+}: {
+  content: string;
+  language: string;
+}) {
+  const html = await codeToHtml(content, {
+    lang: language,
+    theme: "dracula",
+  });
+
+  return <div dangerouslySetInnerHTML={{ __html: html }} />;
 }

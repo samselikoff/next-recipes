@@ -1,3 +1,12 @@
 {
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "plugins": ["prettier-plugin-tailwindcss"],
+
+  "overrides": [
+    {
+      "files": "app/demos/**/*",
+      "options": {
+        "printWidth": 50
+      }
+    }
+  ]
 }
