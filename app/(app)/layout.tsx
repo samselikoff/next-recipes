@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -16,10 +16,10 @@ export default function RootLayout({
           Data fetching
         </p>
         <Link
-          href="/basic-data-fetching"
-          className="block px-3 py-2 hover:bg-gray-200"
+          href="/server-components-and-suspense"
+          className="block px-3 py-2 text-sm hover:bg-gray-200"
         >
-          Basic data fetching
+          Server Components and Suspense
         </Link>
       </nav>
 

@@ -7,16 +7,10 @@ import * as z from "zod";
 import React from "react";
 import { codeToHtml } from "shiki";
 
-export default async function Page() {
-  // "use cache";
+export default async function Page({ params }: PageProps<"/[slug]">) {
+  const { slug } = await params;
 
-  const filePath = path.join(
-    process.cwd(),
-    "app",
-    "demos",
-    "basic-data-fetching",
-    "summary.md",
-  );
+  const filePath = path.join(process.cwd(), "app", "demos", slug, "summary.md");
   const doc = await fs.readFile(filePath, "utf8");
   const ast = Markdoc.parse(doc);
   const content = Markdoc.transform(ast, {
@@ -50,7 +44,7 @@ export default async function Page() {
       </h1>
       <p className="mt-2 text-lg text-gray-700">{frontmatter.description}</p>
 
-      <Frame src="/demos/basic-data-fetching" />
+      <Frame src={`/demos/${slug}`} />
 
       <div className="prose my-20">{summary}</div>
     </div>
