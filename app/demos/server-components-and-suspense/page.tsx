@@ -24,18 +24,14 @@ export default function Demo() {
 }
 
 async function Feed() {
-  await new Promise((resolve) =>
-    setTimeout(resolve, 1_500),
-  );
+  await new Promise((resolve) => setTimeout(resolve, 1_500));
 
   return (
     <div className="space-y-4">
       {Array.from(Array(10).keys()).map((i) => (
         <div key={i}>
-          Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Dolorem dolores natus
-          inventore totam molestias aliquam
-          fugiat.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
+          dolores natus inventore totam molestias aliquam fugiat.
         </div>
       ))}
     </div>

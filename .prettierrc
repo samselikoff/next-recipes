@@ -3,7 +3,7 @@
 
   "overrides": [
     {
-      "files": "app/demos/**/*",
+      "files": "app/demos/**/*.md",
       "options": {
         "printWidth": 50
       }

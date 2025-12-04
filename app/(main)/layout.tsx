@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { recipesData } from "./recipes-data";
 
 export default function Layout({
   children,
@@ -15,12 +16,15 @@ export default function Layout({
         <p className="mt-4 mb-1 px-3 text-sm text-gray-500 uppercase">
           Data fetching
         </p>
-        <Link
-          href="/server-components-and-suspense"
-          className="block px-3 py-2 text-sm hover:bg-gray-200"
-        >
-          Server Components and Suspense
-        </Link>
+        {recipesData.map((recipe, i) => (
+          <Link
+            key={i}
+            href={`/${recipe.slug}`}
+            className="block px-3 py-2 text-sm hover:bg-gray-200"
+          >
+            {recipe.title}
+          </Link>
+        ))}
       </nav>
 
       <main className="w-full">{children}</main>

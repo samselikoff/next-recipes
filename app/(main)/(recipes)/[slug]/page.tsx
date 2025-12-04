@@ -1,4 +1,4 @@
-import { Frame } from "../_components/frame";
+import { Frame } from "./Frame";
 import Markdoc from "@markdoc/markdoc";
 import path from "node:path";
 import fs from "node:fs/promises";
@@ -6,13 +6,21 @@ import yaml from "js-yaml";
 import * as z from "zod";
 import React from "react";
 import { codeToHtml } from "shiki";
+import { recipesData } from "../../recipes-data";
+
+export async function generateStaticParams() {
+  return recipesData.map((recipe) => ({ slug: recipe.slug }));
+}
 
 export default async function Page({ params }: PageProps<"/[slug]">) {
+  // "use cache";
+
   const { slug } = await params;
 
   const filePath = path.join(process.cwd(), "app", "demos", slug, "summary.md");
   const doc = await fs.readFile(filePath, "utf8");
   const ast = Markdoc.parse(doc);
+
   const content = Markdoc.transform(ast, {
     nodes: {
       fence: {
