@@ -4,7 +4,7 @@ import Spinner from "./_spinner";
 export default function Demo() {
   return (
     <div className="relative flex">
-      <div className="sticky top-0 h-dvh px-4 py-6">
+      <div className="fixed top-0 px-4 py-6">
         <h1 className="text-lg">DemoApp</h1>
         <div className="mt-4">
           <p>Home</p>

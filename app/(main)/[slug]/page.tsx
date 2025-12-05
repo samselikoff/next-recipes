@@ -53,7 +53,7 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
         </h1>
         <p className="mt-2 text-lg text-gray-700">{frontmatter.description}</p>
 
-        <div className="mt-12 flex aspect-video flex-col overflow-hidden rounded-md shadow-md ring-1 ring-gray-900/10 lg:-mx-20">
+        <div className="mt-12 flex aspect-video flex-col overflow-hidden rounded-md shadow-xl ring-1 ring-gray-900/10 lg:-mx-20">
           <Frame src={`/demos/${slug}`} />
         </div>
 

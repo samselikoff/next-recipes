@@ -52,7 +52,7 @@ export function Browser({
         </div>
       </div>
 
-      <div className="relative -mt-px h-full w-full grow overflow-hidden rounded-b-lg border-t-0 bg-white">
+      <div className="relative h-full w-full grow overflow-hidden rounded-b-lg bg-white">
         <div className="pointer-events-none absolute inset-0 z-10 rounded-b-lg ring-1 ring-white/5 ring-inset" />
         {children}
       </div>
