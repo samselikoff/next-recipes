@@ -3,7 +3,7 @@ title: Instant page loads with Suspense
 description: Use Suspense to unblock pages from their dynamic content, giving server-rendered pages a prerendered static shell that can be served instantly.
 ---
 
-In Next 16, the primary way to fetch data is by calling async functions in Server Components:
+In Next apps using the App Router, the primary way to fetch data is by calling async functions in Server Components:
 
 ```jsx
 async function Posts() {
@@ -15,7 +15,42 @@ async function Posts() {
 }
 ```
 
-With Cache Components enabled, Next ensures that your data-fetching components _never_ block the initial page load by enforcing that you provide some static fallback content with Suspense:
+When you load a page that renders such a component:
+
+```jsx
+export async function Page() {
+  return (
+    <main>
+      <nav>
+        <p>DemoApp</p>
+      </nav>
+
+      <Posts />
+    </main>
+  );
+}
+```
+
+...that page's initial render will be blocked until the data fetch completes.
+
+If you wanted an instant page load prior to Next 16, you had two options: either statically render your data-fetching components at build time, or switch to using client components to fetch data from the browser.
+
+In Next 16, you no longer have to make this choice. By enabling Cache Components:
+
+```ts
+// next.config.ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+};
+
+export default nextConfig;
+```
+
+...Next now has the ability to _prerender_ every page in your app—even pages with Server Components that fetch data at request time.
+
+With Cache Components enabled, Next will ensure that your data-fetching components never block the initial page load by enforcing that you provide some static fallback content with Suspense:
 
 ```jsx
 export async function Page() {
