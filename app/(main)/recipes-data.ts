@@ -1,6 +1,6 @@
 export const recipesData = [
   {
-    title: "Server Components and Suspense",
-    slug: "server-components-and-suspense",
+    title: "Instant page loads with Suspense",
+    slug: "instant-page-loads-with-suspense",
   },
 ];

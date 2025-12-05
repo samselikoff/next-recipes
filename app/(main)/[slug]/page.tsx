@@ -6,7 +6,7 @@ import yaml from "js-yaml";
 import * as z from "zod";
 import React from "react";
 import { codeToHtml } from "shiki";
-import { recipesData } from "../../recipes-data";
+import { recipesData } from "../recipes-data";
 
 export async function generateStaticParams() {
   return recipesData.map((recipe) => ({ slug: recipe.slug }));
@@ -46,15 +46,19 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
   });
 
   return (
-    <div>
-      <h1 className="text-2xl font-semibold tracking-tight">
-        {frontmatter.title}
-      </h1>
-      <p className="mt-2 text-lg text-gray-700">{frontmatter.description}</p>
+    <div className="relative">
+      <div className="mx-auto max-w-3xl px-8 pt-20">
+        <h1 className="text-3xl font-semibold tracking-tight">
+          {frontmatter.title}
+        </h1>
+        <p className="mt-2 text-lg text-gray-700">{frontmatter.description}</p>
 
-      <Frame src={`/demos/${slug}`} />
+        <div className="mt-12 flex aspect-video flex-col overflow-hidden rounded-md shadow-md ring-1 ring-gray-900/10 lg:-mx-20">
+          <Frame src={`/demos/${slug}`} />
+        </div>
 
-      <div className="prose my-20">{summary}</div>
+        <div className="prose my-20">{summary}</div>
+      </div>
     </div>
   );
 }

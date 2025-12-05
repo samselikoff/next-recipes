@@ -2,8 +2,10 @@
 
 ## Todo
 
+- [ ] Center demo content
 - [ ] Code samples
 - [ ] Active state in sidebar
 - [ ] Uncomment "use cache" in recipe page
 - [ ] Mobile styling
 - [ ] Homepage placeholder
+- [x] Browser frame

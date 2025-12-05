@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { recipesData } from "./recipes-data";
+import { Suspense } from "react";
 
 export default function Layout({
   children,
@@ -27,7 +28,9 @@ export default function Layout({
         ))}
       </nav>
 
-      <main className="w-full">{children}</main>
+      <main className="w-full">
+        <Suspense>{children}</Suspense>
+      </main>
     </div>
   );
 }

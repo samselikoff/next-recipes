@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { ReactNode } from "react";
 
-export function BrowserWindow({
+export function Browser({
   children,
   onRefresh = () => {},
 }: {
@@ -11,7 +11,7 @@ export function BrowserWindow({
   return (
     <div className="flex h-full w-full flex-col rounded-lg">
       <div className="relative flex w-full items-center justify-center rounded-t-md border-b border-gray-900/5 bg-gray-100 px-4 py-2">
-        {/* Close/Back/Forward */}
+        {/* Nav buttons */}
         <div className="absolute inset-y-0 left-4 flex items-center justify-center">
           <div className="mr-4 flex items-center space-x-1.5">
             <span className="size-2.5 rounded-full bg-red-400"></span>
@@ -52,7 +52,7 @@ export function BrowserWindow({
         </div>
       </div>
 
-      <div className="relative -mt-px h-full w-full grow overflow-hidden rounded-b-lg border-t-0">
+      <div className="relative -mt-px h-full w-full grow overflow-hidden rounded-b-lg border-t-0 bg-white">
         <div className="pointer-events-none absolute inset-0 z-10 rounded-b-lg ring-1 ring-white/5 ring-inset" />
         {children}
       </div>
