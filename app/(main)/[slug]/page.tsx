@@ -18,7 +18,7 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
 
   const { slug } = await params;
   const summary = await renderMarkdocFile(`/app/demos/${slug}/summary.md`);
-  const code = await renderDemoMarkdocFile(`/app/demos/${slug}/code.md`);
+  const code = await renderMarkdocFile(`/app/demos/${slug}/code.md`);
 
   return (
     <div className="relative">
@@ -45,41 +45,6 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
 }
 
 async function renderMarkdocFile(file: string) {
-  const parts = file.split("/");
-  const filePath = path.join(process.cwd(), ...parts);
-  const doc = await fs.readFile(filePath, "utf8");
-  const ast = Markdoc.parse(doc);
-  const treeNode = Markdoc.transform(ast, {
-    nodes: {
-      fence: {
-        render: "CodeFence",
-        attributes: {
-          content: { type: String },
-          language: { type: String },
-        },
-      },
-    },
-  });
-
-  const frontmatter = z
-    .object({
-      title: z.string().optional(),
-      description: z.string().optional(),
-    })
-    .parse(
-      ast.attributes.frontmatter ? yaml.load(ast.attributes.frontmatter) : {},
-    );
-
-  const content = Markdoc.renderers.react(treeNode, React, {
-    components: {
-      CodeFence,
-    },
-  });
-
-  return { frontmatter, content };
-}
-
-async function renderDemoMarkdocFile(file: string) {
   const parts = file.split("/");
   const filePath = path.join(process.cwd(), ...parts);
   const doc = await fs.readFile(filePath, "utf8");

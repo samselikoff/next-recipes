@@ -28,6 +28,24 @@ export default function Page() {
 
 {% /file %}
 
+{% file name="posts.tsx" %}
+
+```tsx
+export async function Posts() {
+  const posts = await getPosts();
+
+  return (
+    <div>
+      {posts.map((post) => (
+        <div key={post.id}>{post.content}</div>
+      ))}
+    </div>
+  );
+}
+```
+
+{% /file %}
+
 {% file name="next.config.ts" %}
 
 ```ts

@@ -54,7 +54,7 @@ export function Files({
         {isShowingCode && (
           <div
             className={clsx(
-              "rounded-tr-md rounded-b-md bg-[#282A35] p-4 text-sm",
+              "overflow-hidden rounded-tr-md rounded-b-md bg-[#282A35] text-sm [&_pre]:overflow-x-auto [&_pre]:p-4",
               activeIndex > 0 && "rounded-tl-md",
             )}
           >
