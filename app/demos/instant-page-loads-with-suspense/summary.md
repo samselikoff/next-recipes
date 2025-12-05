@@ -1,6 +1,6 @@
 ---
 title: Instant page loads with Suspense
-description: Use Suspense to unblock a page from its dynamic content, giving server-rendered pages a prerendered static shell that can be served instantly.
+description: Use Suspense to unblock routes from their dynamic content, giving server-rendered pages a prerendered static shell that can be served instantly.
 ---
 
 In Next 16, the primary way to fetch data is by calling async functions in Server Components:
@@ -15,7 +15,7 @@ async function Posts() {
 }
 ```
 
-With Cache Components enabled, Next will ensure that your data-fetching components don't fully block your routes by enforcing that you provide some static fallback content with Suspense:
+With Cache Components enabled, Next ensures that your data-fetching components _never_ block the initial page load by enforcing that you provide some static fallback content with Suspense:
 
 ```jsx
 export async function Page() {
@@ -33,8 +33,8 @@ export async function Page() {
 }
 ```
 
-This gives your app a fast initial boot—as fast as you'd get with a traditional SSG or jamstack approach, since the prerendered content can be served from a CDN—while _still_ letting you fetch dynamic data on the server as part of the initial request. And even if the prerendered UI is minimal, the shell gets the browser loading your app's `<script>` and `<link>` tags as soon as possible.
+This gives your app a fast initial boot—as fast as you'd get with a traditional SSG or jamstack approach, since the prerendered content can be served from a CDN—while _still_ letting you fetch dynamic data on the server as part of the initial request. Even if the prerendered UI is minimal, the shell gets the browser to start loading your app's static assets (like `<script>` and `<link>` tags) in parallel with your data fetch, since they're known ahead of time and are part of the shell.
 
-No client-side data fetching library or API routes needed, and no need for a second roundtrip back to the server. Just use Server Components and Suspense, and every page will serve its prerendered static content _and_ its dynamic data all in the same response.
+No client-side data fetching library or API routes needed, and no need for a second roundtrip back to the server. Just use Server Components and Suspense, and every page will serve its prerendered static content _and_ its dynamic data, all in the same response.
 
 Powered by React's server-side streaming APIs and Next's ability to extract static content from every page.

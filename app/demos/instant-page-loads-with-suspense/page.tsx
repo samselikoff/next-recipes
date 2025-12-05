@@ -4,7 +4,7 @@ import Spinner from "./_spinner";
 export default function Demo() {
   return (
     <div className="relative flex">
-      <div className="fixed top-0 px-4 py-6">
+      <div className="fixed top-0 h-dvh w-[100px] px-2 py-4 max-md:border-r max-md:border-gray-300 md:px-4 md:py-6">
         <h1 className="text-lg">DemoApp</h1>
         <div className="mt-4">
           <p>Home</p>
@@ -14,7 +14,7 @@ export default function Demo() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-sm py-6">
+      <div className="mx-auto max-w-sm px-4 py-4 max-md:ml-[100px] md:py-6">
         <Suspense fallback={<Spinner />}>
           <Feed />
         </Suspense>
