@@ -12,7 +12,11 @@ export default async function Home() {
         <p className="mt-4 text-gray-400 uppercase">Data fetching</p>
 
         {recipesData.map((recipe, i) => (
-          <Link key={i} href={`/${recipe.slug}`} className="block py-2">
+          <Link
+            key={i}
+            href={`/${recipe.slug}`}
+            className="block py-2 hover:underline"
+          >
             {recipe.title}
           </Link>
         ))}

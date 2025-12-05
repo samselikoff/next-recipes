@@ -19,7 +19,7 @@ export default function Layout({
 
       {/* Desktop nav */}
       <nav className="w-60 shrink-0 bg-gray-50 py-2 max-md:hidden">
-        <Link href="/" className="block px-3 py-2">
+        <Link href="/" className="block px-3 py-2 hover:underline">
           Next.js Recipes
         </Link>
 
@@ -30,7 +30,7 @@ export default function Layout({
           <NavLink
             key={i}
             href={`/${recipe.slug}`}
-            className="block px-3 py-2 text-sm data-active:font-medium"
+            className="block px-3 py-2 text-sm hover:underline data-active:font-medium"
           >
             {recipe.title}
           </NavLink>
