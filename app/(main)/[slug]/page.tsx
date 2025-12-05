@@ -1,3 +1,5 @@
+"use cache";
+
 import Markdoc, { Tag } from "@markdoc/markdoc";
 import yaml from "js-yaml";
 import fs from "node:fs/promises";
@@ -8,14 +10,27 @@ import * as z from "zod";
 import { recipesData } from "../recipes-data";
 import { File, Files } from "./Files";
 import { Frame } from "./Frame";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[slug]">): Promise<Metadata> {
+  const { slug } = await params;
+  const { frontmatter } = await renderMarkdocFile(
+    `/app/demos/${slug}/summary.md`,
+  );
+
+  return {
+    title: frontmatter.title,
+    description: frontmatter.description,
+  };
+}
 
 export async function generateStaticParams() {
   return recipesData.map((recipe) => ({ slug: recipe.slug }));
 }
 
 export default async function Page({ params }: PageProps<"/[slug]">) {
-  "use cache";
-
   const { slug } = await params;
   const summary = await renderMarkdocFile(`/app/demos/${slug}/summary.md`);
   const code = await renderMarkdocFile(`/app/demos/${slug}/code.md`);
