@@ -1,6 +1,6 @@
 ---
 title: Instant page loads with Suspense
-description: Use Suspense to unblock routes from their dynamic content, giving server-rendered pages a prerendered static shell that can be served instantly.
+description: Use Suspense to unblock pages from their dynamic content, giving server-rendered pages a prerendered static shell that can be served instantly.
 ---
 
 In Next 16, the primary way to fetch data is by calling async functions in Server Components:
