@@ -33,7 +33,7 @@ export async function Page() {
 }
 ```
 
-This gives your app a fast initial boot—as fast as you'd get with a traditional SSG or jamstack approach, since the prerendered content can be served from a CDN—while _still_ letting you fetch dynamic data on the server as part of the initial request.
+This gives your app a fast initial boot—as fast as you'd get with a traditional SSG or jamstack approach, since the prerendered content can be served from a CDN—while _still_ letting you fetch dynamic data on the server as part of the initial request. And even if the prerendered UI is minimal, the shell gets the browser loading your app's `<script>` and `<link>` tags as soon as possible.
 
 No client-side data fetching library or API routes needed, and no need for a second roundtrip back to the server. Just use Server Components and Suspense, and every page will serve its prerendered static content _and_ its dynamic data all in the same response.
 

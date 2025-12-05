@@ -47,11 +47,13 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
 
   return (
     <div className="relative">
-      <div className="mx-auto max-w-3xl px-8 pt-20">
-        <h1 className="text-3xl font-semibold tracking-tight">
+      <div className="mx-auto max-w-3xl px-4 pt-8 md:px-8 md:pt-20">
+        <h1 className="text-xl font-semibold tracking-tight md:text-3xl">
           {frontmatter.title}
         </h1>
-        <p className="mt-2 text-lg text-gray-700">{frontmatter.description}</p>
+        <p className="mt-2 text-gray-600 md:text-lg">
+          {frontmatter.description}
+        </p>
 
         <div className="mt-12 flex aspect-video flex-col overflow-hidden rounded-md shadow-xl ring-1 ring-gray-900/10 lg:-mx-20">
           <Frame src={`/demos/${slug}`} />

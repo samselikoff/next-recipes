@@ -8,8 +8,16 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex min-h-dvh">
-      <nav className="w-60 shrink-0 bg-gray-50 py-2">
+    <div className="min-h-dvh md:flex">
+      {/* Mobile nav */}
+      <nav className="bg-gray-50 md:hidden">
+        <Link href="/" className="block p-4 font-medium">
+          Next.js Recipes
+        </Link>
+      </nav>
+
+      {/* Desktop nav */}
+      <nav className="w-60 shrink-0 bg-gray-50 py-2 max-md:hidden">
         <Link href="/" className="block px-3 py-2">
           Next.js Recipes
         </Link>
@@ -29,6 +37,7 @@ export default function Layout({
       </nav>
 
       <main className="w-full">
+        {/* TODO: Remove */}
         <Suspense>{children}</Suspense>
       </main>
     </div>
