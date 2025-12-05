@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { recipesData } from "./recipes-data";
-import { Suspense } from "react";
 import { NavLink } from "./NavLink";
+import { recipesData } from "./recipes-data";
 
 export default function Layout({
   children,
@@ -37,10 +36,7 @@ export default function Layout({
         ))}
       </nav>
 
-      <main className="w-full">
-        {/* TODO: Remove */}
-        <Suspense>{children}</Suspense>
-      </main>
+      <main className="w-full">{children}</main>
     </div>
   );
 }

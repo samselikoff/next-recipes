@@ -14,7 +14,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: PageProps<"/[slug]">) {
-  // "use cache";
+  "use cache";
 
   const { slug } = await params;
   const summary = await renderMarkdocFile(`/app/demos/${slug}/summary.md`);
