@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { recipesData } from "./recipes-data";
 import { Suspense } from "react";
+import { NavLink } from "./NavLink";
 
 export default function Layout({
   children,
@@ -26,13 +27,13 @@ export default function Layout({
           Data fetching
         </p>
         {recipesData.map((recipe, i) => (
-          <Link
+          <NavLink
             key={i}
             href={`/${recipe.slug}`}
-            className="block px-3 py-2 text-sm hover:bg-gray-200"
+            className="block px-3 py-2 text-sm data-active:font-medium"
           >
             {recipe.title}
-          </Link>
+          </NavLink>
         ))}
       </nav>
 
