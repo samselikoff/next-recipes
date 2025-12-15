@@ -1,6 +1,6 @@
 ---
-title: Instant page loads with Suspense
-description: Use Suspense to unblock routes from their dynamic content, giving server-rendered pages a prerendered static shell that can be served instantly.
+title: Sharing data with Client Components
+description: Use Context to provide promises from Server Components to the client tree, without blocking the rest of the page.
 ---
 
 In Next apps using the App Router, the primary way to fetch data is by calling async functions in Server Components:
