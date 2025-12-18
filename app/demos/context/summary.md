@@ -1,75 +1,245 @@
 ---
 title: Sharing data with Client Components
 description: Use Context to provide promises from Server Components to the client tree, without blocking the rest of the page.
+# description: Use Context to share Server Component data with the client as promises, ensuring that data doesn't block the rest of the page.
 ---
 
-In Next apps using the App Router, the primary way to fetch data is by calling async functions in Server Components:
+A common pattern in client-side React apps is to fetch some shared data, like the current user, and make it available to the rest of the tree using a Context provider:
 
 ```jsx
-async function Posts() {
-  const posts = await getLatestPosts();
+function Layout({ children }) {
+  return <AuthProvider>{children}</AuthProvider>;
+}
 
-  return posts.map((post) => (
-    <div key={post.id}>{post.content}</div>
-  ));
+// Somewhere deep in the client tree...
+function Menu() {
+  const currentUser = useCurrentUser();
+
+  return <p>Hello, {currentUser.name}!</p>;
 }
 ```
 
-When you load a page that renders such a component:
+This helps you avoid ["prop drilling"](https://react.dev/learn/passing-data-deeply-with-context#the-problem-with-passing-props), a situation where lots of intermediate components end up passing data down the tree _solely_ to get it to the deeper components that need it.
+
+In Next.js, most of your data fetching happens in Server Components. And since Server Components don't support Context, you might be wondering how to address the problem of prop drilling within your Next app's component tree.
+
+## React cache
+
+First, while Server Components don't support Context, they do support React's [cache](https://react.dev/reference/react/cache) function, which helps you avoid prop drilling for deeply nested Server Components:
 
 ```jsx
-export async function Page() {
-  return (
-    <main>
-      <nav>
-        <p>DemoApp</p>
-      </nav>
+// lib/auth.ts
+import { cache } from "react";
 
-      <Posts />
-    </main>
+// 🟢 Cache the function for the current request
+export const getCurrentUser = cache(
+  async function () {
+    const session = await getSession(cookies());
+
+    return session.currentUser;
+  },
+);
+
+// Somewhere deep in the server tree...
+async function Menu() {
+  const currentUser = await getCurrentUser();
+
+  return <p>Hello, {currentUser.name}!</p>;
+}
+```
+
+`cache` will memoize the function you give it for the current request-response cycle only. So no matter how many components call it, your function will only execute once per request.
+
+But what about Client Components? How can they access this data?
+
+By design, Client Components can't directly call server-side helpers like `getCurrentUser`; if they could, it'd be too easy for us to add unnecessary roundtrips from the client to the server and back (so-called network waterfalls) while rendering our page.
+
+So—how can we share data that we fetched in our Server Components with the rest of the client tree?
+
+Well, even though Server Components can't use Context themselves, they _can_ pass their data to Client Components as props. And Client Components can use Context.
+
+## Passing Server Component props into Context
+
+So, if we fetch the `currentUser` from a Server Component, pass it to a Client Component as a prop, and then render a Context with that prop as its value, the rest of our client tree should have access to the `currentUser`.
+
+Let's give it a shot!
+
+Here's the Server Component part of our AuthProvider:
+
+```jsx
+// auth-provider/index.jsx
+export async function AuthProvider({ children }) {
+  const currentUser = await getCurrentUser();
+
+  return (
+    <AuthContext value={currentUser}>
+      {children}
+    </AuthContext>
   );
 }
 ```
 
-...that page's initial render will be blocked until the data fetch completes.
-
-If you wanted an instant page load prior to Next 16, you had two options: either statically render your data-fetching components at build time, or switch to using client components to fetch data from the browser.
-
-In Next 16, you no longer have to make this choice. By enabling Cache Components:
-
-```ts
-// next.config.ts
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  cacheComponents: true,
-};
-
-export default nextConfig;
-```
-
-...Next now has the ability to _prerender_ every page in your app—even pages with Server Components that fetch data at request time.
-
-With Cache Components enabled, Next will ensure that your data-fetching components never block the initial page load by enforcing that you provide some static fallback content with Suspense:
+And here's the client part: the Context itself, and a Hook for convenient access:
 
 ```jsx
-export async function Page() {
-  return (
-    <main>
-      <nav>
-        <p>DemoApp</p>
-      </nav>
+// auth-provider/client.jsx
+"use client";
+import { createContext, use } from "react";
 
-      <Suspense fallback={<Spinner />}>
-        <Posts />
-      </Suspense>
-    </main>
+const Context = createContext();
+
+async function AuthContext({ value, children }) {
+  return (
+    <Context value={value}>{children}</Context>
+  );
+}
+
+export function useCurrentUser() {
+  const currentUser = use(Context);
+
+  return currentUser;
+}
+```
+
+Now if we add the provider to our root layout:
+
+```jsx
+// layout.tsx
+import { AuthProvider } from "./auth-provider";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
+    </html>
   );
 }
 ```
 
-This gives your app a fast initial boot—as fast as you'd get with a traditional SSG or jamstack approach, since the prerendered content can be served from a CDN—while _still_ letting you fetch dynamic data on the server as part of the initial request. Even if the prerendered UI is minimal, the shell gets the browser to start loading your app's static assets (like `<script>` and `<link>` tags) in parallel with your data fetch, since they're known ahead of time and are part of the shell.
+...we can call `useCurrentUser` anywhere inside the client tree to access the data:
 
-No client-side data fetching library or API routes needed, and no need for a second roundtrip back to the server. Just use Server Components and Suspense, and every page will serve its prerendered static content _and_ its dynamic data, all in the same response.
+```jsx
+// Somewhere deep in the client tree...
+function Menu() {
+  const currentUser = useCurrentUser();
 
-Powered by React's server-side streaming APIs and Next's ability to extract static content from every page.
+  return <p>Hello, {currentUser.name}!</p>;
+}
+```
+
+Voilà! Pretty nifty.
+
+---
+
+We've solved the prop drilling problem across both our server and client trees, but we've introduced a new issue:
+
+AuthProvider is now blocking the initial render of our entire application.
+
+By awaiting the `getCurrentUser` promise in our provider, none of the children can be rendered until that promise resolves. And if you've enabled [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components), you'll even see a new warning that points this out:
+
+> Data that blocks navigation was accessed outside of <Suspense>
+
+How can we fix it?
+
+## Using promises to unblock navigations
+
+Instead of passing the _resolved_ user to the Client Component, we can instead pass only the _promise_:
+
+```tsx
+// auth-provider/index.jsx
+export async function AuthProvider({ children }) {
+  const currentUserPromise = getCurrentUser(); // 🟢 No await
+
+  return (
+    <AuthContext value={currentUserPromise}>
+      {children}
+    </AuthContext>
+  );
+}
+```
+
+Now our Context has only the promise:
+
+```jsx
+// auth-provider/client.jsx
+"use client";
+import { createContext } from "react";
+
+const Context = createContext();
+
+async function AuthContext({ value, children }) {
+  // 🟢 value is a promise
+  return (
+    <Context value={value}>{children}</Context>
+  );
+}
+```
+
+...and AuthProvider no longer blocks our app from rendering.
+
+But what about our Hook? Its return value has become the promise, instead of the actual data:
+
+```jsx
+export function useCurrentUser() {
+  const currentUserPromise = use(Context);
+
+  return currentUserPromise;
+}
+```
+
+If we call React's [`use`](https://react.dev/reference/react/use) API once more, we can unwrap the promise:
+
+```jsx
+export function useCurrentUser() {
+  const currentUserPromise = use(Context);
+  const currentUser = use(currentUserPromise);
+
+  return currentUser;
+}
+```
+
+...and now the Hook provides the data just like before, only this time it will suspend the caller if the data's not ready.
+
+So, if a Client Component deep in the tree needs the current user for rendering, we can call `useCurrentUser`:
+
+```jsx
+// Somewhere deep in the client tree...
+function Menu() {
+  const currentUser = useCurrentUser();
+
+  return <p>Hello, {currentUser.name}!</p>;
+}
+```
+
+and provide some fallback UI while it suspends:
+
+```jsx
+// The component that renders Menu
+function Header() {
+  return (
+    <div>
+      <Link href="/">Home</Link>
+
+      <Menu.Root>
+        <Menu.Trigger>Account</Menu.Trigger>
+        <Menu.Popup>
+          {/* 🟢 Fallback UI */}
+          <Suspense fallback="Loading...">
+            <Menu />
+          </Suspense>
+        </Menu.Popup>
+      </Menu.Root>
+    </div>
+  );
+}
+```
+
+Now, our provider doesn't block the rest of the page from rendering, and we still have an easy way to access the data throughout our client tree.
+
+---
+
+Thus, you can use this pattern to still fetch data in RSCs, but provide them _as promises_ to the client tree. By **awaiting in the consumers** who need that data to render, **rather than in the providers**, you can keep the data fetches from blocking the rest of the tree.
+
+This is great for data that depends on the current request, like the current user, or anything that uses params or search params.

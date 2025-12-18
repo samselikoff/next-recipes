@@ -13,12 +13,15 @@ export default function Page() {
       </nav>
 
       <div className="mx-auto mt-4 max-w-md p-4">
-        <h1 className="text-2xl font-bold">Main content</h1>
-
-        <div className="mt-4 space-y-4">
+        <div className="mt-4 mb-8 space-y-4">
           <p>
             This page and all of its content is unblocked, despite being wrapped
-            inside of AuthProvider.
+            in AuthProvider.
+          </p>
+          <p>
+            Press <strong>Account</strong> above to see a client component that
+            reads the current user from context. Then try pressing it quickly
+            after reloading the page.
           </p>
 
           <hr className="my-8 border-gray-300" />

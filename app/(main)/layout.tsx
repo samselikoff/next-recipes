@@ -2,11 +2,12 @@ import Link from "next/link";
 import { NavLink } from "./NavLink";
 import { recipesData } from "./recipes-data";
 
-export default function Layout({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // await new Promise((resolve) => setTimeout(resolve, 2_000));
   return (
     <div className="min-h-dvh md:flex">
       {/* Mobile nav */}
