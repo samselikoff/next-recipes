@@ -5,14 +5,14 @@ import { User } from "../lib/get-current-user";
 
 const Context = createContext<Promise<User | null>>(Promise.resolve(null));
 
-export function Provider({
-  promise,
+export function AuthContext({
+  value,
   children,
 }: {
-  promise: Promise<User>;
+  value: Promise<User>;
   children: ReactNode;
 }) {
-  return <Context value={promise}>{children}</Context>;
+  return <Context value={value}>{children}</Context>;
 }
 
 export function useCurrentUser() {
