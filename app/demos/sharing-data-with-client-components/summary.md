@@ -103,7 +103,7 @@ export function useCurrentUser() {
 Now if we add the provider to our root layout:
 
 ```jsx
-// layout.tsx
+// layout.jsx
 import { AuthProvider } from "./auth-provider";
 
 export default function RootLayout({ children }) {
@@ -146,7 +146,7 @@ How can we fix it?
 
 Instead of passing the _resolved_ user to the Client Component, let's pass only the _promise_:
 
-```tsx
+```jsx
 // auth-provider/index.jsx
 export async function AuthProvider({ children }) {
   const currentUserPromise = getCurrentUser(); // 🟢 No await

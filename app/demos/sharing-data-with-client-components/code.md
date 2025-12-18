@@ -57,7 +57,7 @@ export function useCurrentUser() {
 
 {% /file %}
 
-{% file name="menu.tsx" %}
+{% file name="menu.jsx" %}
 
 ```jsx
 "use client";
