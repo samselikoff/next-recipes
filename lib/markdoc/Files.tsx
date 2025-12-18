@@ -23,13 +23,13 @@ export function Files({
       <div className="mt-4 xl:-mx-20">
         <div className="flex">
           {isShowingCode && (
-            <div className="flex gap-2">
+            <div className="flex gap-2 overflow-x-scroll">
               {filenames.map((filename) => (
                 <button
                   key={filename}
                   onClick={() => setActiveFilename(filename)}
                   className={clsx(
-                    "rounded-t-md px-3 py-2 text-sm",
+                    "rounded-t-md px-3 py-2 text-sm whitespace-nowrap",
                     filename === activeFilename && "bg-[#282A35] text-white",
                     filename !== activeFilename &&
                       "text-gray-500 hover:text-gray-900",
@@ -41,7 +41,7 @@ export function Files({
             </div>
           )}
 
-          <div className="ml-auto">
+          <div className="ml-auto shrink-0">
             <button
               onClick={() => setIsShowingCode(!isShowingCode)}
               className="px-3 py-2 text-sm text-gray-400 hover:text-gray-900"
