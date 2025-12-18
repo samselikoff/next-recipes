@@ -1,7 +1,6 @@
 ---
 title: Sharing data with Client Components
-# description: Use promises to provide data from Server Components to the client tree, without blocking the rest of the page.
-description: Use Context to provide promises from Server Components to the client tree, without blocking the rest of the page.
+description: Use promises to provide data from Server Components to the client tree, without blocking the rest of the page.
 ---
 
 A common pattern in client-side React apps is to fetch some shared data, like the current user, and make it available to the rest of the tree using a Context provider:
