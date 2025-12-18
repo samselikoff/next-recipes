@@ -1,7 +1,7 @@
 ---
 title: Sharing data with Client Components
+# description: Use promises to provide data from Server Components to the client tree, without blocking the rest of the page.
 description: Use Context to provide promises from Server Components to the client tree, without blocking the rest of the page.
-# description: Use Context to share Server Component data with the client as promises, ensuring that data doesn't block the rest of the page.
 ---
 
 A common pattern in client-side React apps is to fetch some shared data, like the current user, and make it available to the rest of the tree using a Context provider:
@@ -137,7 +137,7 @@ We've solved the prop drilling problem across both our server and client trees, 
 
 AuthProvider is now blocking the initial render of our entire application.
 
-By awaiting the `getCurrentUser` promise in our provider, none of the children can be rendered until that promise resolves. And if you've enabled [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components), you'll even see a new warning that points this out:
+By awaiting the `getCurrentUser` promise in our provider, none of the children can be rendered until that promise resolves. And if you've enabled [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components), you'll even see a new warning calling this out:
 
 > Data that blocks navigation was accessed outside of <Suspense>
 
@@ -145,7 +145,7 @@ How can we fix it?
 
 ## Using promises to unblock navigations
 
-Instead of passing the _resolved_ user to the Client Component, we can instead pass only the _promise_:
+Instead of passing the _resolved_ user to the Client Component, let's pass only the _promise_:
 
 ```tsx
 // auth-provider/index.jsx
@@ -160,7 +160,7 @@ export async function AuthProvider({ children }) {
 }
 ```
 
-Now our Context has only the promise:
+Now our Context is providing the promise to the rest of the tree:
 
 ```jsx
 // auth-provider/client.jsx
@@ -179,7 +179,7 @@ async function AuthContext({ value, children }) {
 
 ...and AuthProvider no longer blocks our app from rendering.
 
-But what about our Hook? Its return value has become the promise, instead of the actual data:
+But what about our Hook? Its return value is now the promise instead of the actual data:
 
 ```jsx
 export function useCurrentUser() {
@@ -213,7 +213,7 @@ function Menu() {
 }
 ```
 
-and provide some fallback UI while it suspends:
+and provide some fallback UI while the component suspends:
 
 ```jsx
 // The component that renders Menu
@@ -225,7 +225,7 @@ function Header() {
       <Menu.Root>
         <Menu.Trigger>Account</Menu.Trigger>
         <Menu.Popup>
-          {/* 🟢 Fallback UI */}
+          {/* 🟢 Fallback UI for when Menu suspends */}
           <Suspense fallback="Loading...">
             <Menu />
           </Suspense>
@@ -240,6 +240,10 @@ Now, our provider doesn't block the rest of the page from rendering, and we stil
 
 ---
 
-Thus, you can use this pattern to still fetch data in RSCs, but provide them _as promises_ to the client tree. By **awaiting in the consumers** who need that data to render, **rather than in the providers**, you can keep the data fetches from blocking the rest of the tree.
+Passing promises to Client Components is a powerful pattern.
 
-This is great for data that depends on the current request, like the current user, or anything that uses params or search params.
+You get to use Server Components to martial all the data needed for a page during the initial request, but you unblock components that don't depend on that data from rendering as early as possible—potentially even at build time, if you're prerendering your app.
+
+And by using `cache` on the server, and Context and `use` on the client, you can avoid prop drilling when sharing that data throughout your server and client trees.
+
+It's a great pattern for data that many components need, like the current user, feature flags, or even dynamic data that depends on request values like dynamic params or search params.
