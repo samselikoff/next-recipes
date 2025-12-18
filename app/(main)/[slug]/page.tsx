@@ -1,4 +1,4 @@
-// "use cache";
+"use cache";
 
 import { recipesData } from "../recipes-data";
 import { Frame } from "./Frame";

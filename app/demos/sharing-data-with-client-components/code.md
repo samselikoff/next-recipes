@@ -5,7 +5,7 @@
 ```tsx
 import { AuthProvider } from "./auth-provider";
 
-export default function RootLayout({ children }) {
+export default function Layout({ children }) {
   return <AuthProvider>{children}</AuthProvider>;
 }
 ```
