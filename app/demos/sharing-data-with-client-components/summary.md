@@ -59,7 +59,7 @@ Well, even though Server Components can't use Context themselves, they _can_ pas
 
 ## Passing Server Component props into Context
 
-So, if we fetch the `currentUser` from a Server Component, pass it to a Client Component as a prop, and then render a Context with that prop as its value, the rest of our client tree should have access to the `currentUser`.
+So, if we fetch `currentUser` from a Server Component, pass it to a Client Component as a prop, and then render a Context with that prop as its value, the rest of our client tree should have access to `currentUser`.
 
 Let's give it a shot!
 
