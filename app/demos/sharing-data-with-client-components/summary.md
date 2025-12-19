@@ -199,7 +199,7 @@ export function useCurrentUser() {
 }
 ```
 
-...and now the Hook provides the data just like before, only this time it will suspend the caller if the data's not ready.
+...and now the Hook provides the data just like before, only this time **it will suspend the caller** if the data's not ready.
 
 So, if a Client Component deep in the tree needs the current user for rendering, we can call `useCurrentUser`:
 
