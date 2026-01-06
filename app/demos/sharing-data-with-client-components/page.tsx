@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <div>
       <nav className="sticky top-0 flex gap-4 bg-gray-50 px-4 py-4 text-sm text-gray-700">
-        <Link href="/demos/context">Home</Link>
+        <Link href="/demos/sharing-data-with-client-components">Home</Link>
 
         <div className="ml-auto">
           <AccountButton />
