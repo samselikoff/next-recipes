@@ -8,7 +8,7 @@ export const recipesData = [
     slug: "sharing-data-with-client-components",
   },
   {
-    title: "Static variants using rewrites",
-    slug: "static-variants-using-rewrites",
+    title: "Static page variants",
+    slug: "static-page-variants",
   },
 ];

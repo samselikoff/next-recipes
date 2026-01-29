@@ -25,7 +25,7 @@ export function Browser({
         </div>
 
         {/* Address bar */}
-        <div className="relative mx-3 flex w-1/2 overflow-hidden rounded-lg px-2.5 py-2 pr-12 text-center text-xs font-medium whitespace-nowrap text-gray-400 ring ring-gray-900/10 selection:bg-gray-900 selection:text-white">
+        <div className="relative mx-3 flex w-1/2 overflow-hidden rounded-lg px-2.5 py-2 text-center text-xs font-medium whitespace-nowrap text-gray-400 ring ring-gray-900/10 selection:bg-gray-900 selection:text-white">
           <span className="w-full text-center">
             demo.app
             <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-linear-to-r from-transparent via-gray-100 to-gray-100"></div>

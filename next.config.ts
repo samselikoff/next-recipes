@@ -7,9 +7,9 @@ const nextConfig: NextConfig = {
     return {
       beforeFiles: [
         {
-          source: "/demos/static-variants-using-rewrites",
+          source: "/demos/static-page-variants",
           missing: [{ type: "cookie", key: "isLoggedIn" }],
-          destination: "/demos/static-variants-using-rewrites/sign-in",
+          destination: "/demos/static-page-variants/sign-in",
         },
       ],
     };
