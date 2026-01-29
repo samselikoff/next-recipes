@@ -1,4 +1,5 @@
 import Image from "next/image";
+import LoginButton from "./_login-button";
 
 export default function Page() {
   return (
@@ -9,12 +10,7 @@ export default function Page() {
           <div className="size-7 rounded-full bg-linear-to-br from-gray-500 to-gray-950" />
           <span className="text-sm font-semibold text-gray-900">Acme</span>
         </div>
-        <a
-          href="#"
-          className="rounded-lg bg-gray-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-gray-800"
-        >
-          Log in
-        </a>
+        <LoginButton />
       </header>
 
       {/* Hero */}
