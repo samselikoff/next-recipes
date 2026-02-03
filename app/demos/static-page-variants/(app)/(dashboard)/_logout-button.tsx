@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { logOut } from "./actions";
-import Spinner from "../../instant-page-loads-with-suspense/_spinner";
+import Spinner from "../../../instant-page-loads-with-suspense/_spinner";
 
 export default function LogoutButton() {
   const [isPending, startTransition] = useTransition();

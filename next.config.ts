@@ -8,8 +8,8 @@ const nextConfig: NextConfig = {
       beforeFiles: [
         {
           source: "/demos/static-page-variants",
-          missing: [{ type: "cookie", key: "isLoggedIn" }],
-          destination: "/demos/static-page-variants/sign-in",
+          has: [{ type: "cookie", key: "isLoggedIn" }],
+          destination: "/demos/static-page-variants/home",
         },
       ],
     };

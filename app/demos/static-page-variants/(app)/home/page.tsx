@@ -1,11 +1,12 @@
 import Image from "next/image";
 import LoginButton from "./_login-button";
+import Link from "next/link";
 
 export default function Page() {
   return (
     <div className="relative mx-auto flex h-full min-h-dvh w-full max-w-4xl flex-col bg-white px-8">
       {/* Header */}
-      <header className="flex items-center justify-between pt-4 pb-4">
+      <header className="flex items-center justify-between pt-4">
         <div className="flex items-center gap-2">
           <div className="size-7 rounded-full bg-linear-to-br from-gray-500 to-gray-950" />
           <span className="text-sm font-semibold text-gray-900">Acme</span>
@@ -24,18 +25,18 @@ export default function Page() {
             collaborate in real-time, and deliver exceptional results.
           </p>
           <div className="mt-6 flex gap-3">
-            <a
+            <Link
               href="#"
               className="rounded-lg bg-gray-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
             >
               Get started
-            </a>
-            <a
+            </Link>
+            <Link
               href="#"
               className="rounded-lg border border-gray-300 px-5 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
             >
               Learn more
-            </a>
+            </Link>
           </div>
         </div>
         <div className="hidden w-80 sm:block">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import Spinner from "../../instant-page-loads-with-suspense/_spinner";
+import Spinner from "../../../instant-page-loads-with-suspense/_spinner";
 import { logIn } from "./actions";
 
 export default function LoginButton() {
