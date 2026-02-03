@@ -15,6 +15,16 @@ export default function Demo() {
         </div>
       </header>
 
+      {/* Nav */}
+      <nav className="border-b border-gray-200 bg-white">
+        <div className="mx-auto flex max-w-4xl gap-6 px-8">
+          <a href="#" className="-mb-px border-b-2 border-gray-900 py-3 text-sm font-medium text-gray-900">Home</a>
+          <a href="#" className="-mb-px border-b-2 border-transparent py-3 text-sm text-gray-600 hover:text-gray-900">Feed</a>
+          <a href="#" className="-mb-px border-b-2 border-transparent py-3 text-sm text-gray-600 hover:text-gray-900">Projects</a>
+          <a href="#" className="-mb-px border-b-2 border-transparent py-3 text-sm text-gray-600 hover:text-gray-900">Settings</a>
+        </div>
+      </nav>
+
       {/* Main content */}
       <main className="mx-auto max-w-4xl px-8 py-8">
         <h1 className="text-xl font-semibold text-gray-900">Your Feed</h1>
