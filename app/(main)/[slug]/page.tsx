@@ -40,7 +40,7 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
 
         <div className="mt-12 overflow-hidden rounded-md shadow-xl ring-1 ring-gray-900/10 xl:-mx-20">
           <div className="flex aspect-square flex-col md:aspect-video">
-            <Frame src={`/demos/${slug}`} />
+            <Frame initialSrc={`/demos/${slug}`} />
           </div>
         </div>
 
