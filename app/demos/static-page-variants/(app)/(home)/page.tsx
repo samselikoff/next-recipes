@@ -41,6 +41,7 @@ export default function Page() {
         </div>
         <div className="hidden w-80 sm:block">
           <Image
+            loading="eager"
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=640&h=400&fit=crop"
             alt="Team collaborating"
             width={320}
