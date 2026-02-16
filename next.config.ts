@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
       {
         source: "/demos/static-page-variants",
         has: [{ type: "cookie", key: "isLoggedIn" }],
-        destination: "/demos/static-page-variants/overview",
+        destination: "/demos/static-page-variants/dashboard",
       },
       {
         source: "/demos/static-page-variants",
