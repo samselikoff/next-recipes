@@ -5,11 +5,10 @@ export default async function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // await new Promise((resolve) => setTimeout(resolve, 2_000));
   return (
     <div className="min-h-dvh">
-      <nav className="bg-gray-50">
-        <Link href="/" className="block p-4 font-medium">
+      <nav className="flex bg-gray-50 p-3">
+        <Link href="/" className="p-1 font-medium">
           Next.js Recipes
         </Link>
       </nav>

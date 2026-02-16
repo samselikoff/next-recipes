@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LoginButton from "./_login-button";
+import LoginButton from "./client";
 // import Link from "next/link";
 
 export default function Page() {
