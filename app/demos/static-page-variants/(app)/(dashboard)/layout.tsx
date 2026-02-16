@@ -12,7 +12,9 @@ export default function DashboardLayout({
       <header className="border-b border-gray-200 bg-white">
         <div className="mx-auto flex max-w-4xl justify-between px-8">
           <nav className="flex gap-6">
-            <NavLink href="/demos/static-page-variants">Home</NavLink>
+            <NavLink href="/demos/static-page-variants/overview">
+              Overview
+            </NavLink>
             <NavLink href="/demos/static-page-variants/feed">Feed</NavLink>
             <NavLink href="/demos/static-page-variants/projects">
               Projects

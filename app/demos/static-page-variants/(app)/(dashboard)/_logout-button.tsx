@@ -11,7 +11,7 @@ export default function LogoutButton() {
     <button
       onClick={() => startTransition(() => logOut())}
       disabled={isPending}
-      className="rounded-lg border border-gray-300 px-4 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-70"
+      className="rounded-lg border border-gray-300 px-4 py-1.5 text-sm font-medium text-gray-700 transition-colors enabled:hover:bg-gray-50 disabled:opacity-70"
     >
       <Spinner loading={isPending} className="size-4">
         Log out

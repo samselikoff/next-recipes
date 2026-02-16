@@ -7,17 +7,17 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /*
-    Optimistically route signed-out users to the public marketing homepage.
+    Use an optimistic cookie to route signed-in users to the dashboard page
   */
   async rewrites() {
     return {
       beforeFiles: [
         {
-          source: "/",
-          missing: [
+          source: "/:path*",
+          has: [
             { type: "cookie", key: "isLoggedIn" },
           ],
-          destination: "/home",
+          destination: "/dashboard/:path*",
         },
       ],
     };

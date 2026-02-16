@@ -3,7 +3,7 @@ import { Suspense } from "react";
 export default function FeedPage() {
   return (
     <>
-      <h1 className="text-xl font-semibold text-gray-900">Your Feed</h1>
+      <h1 className="text-xl font-semibold text-gray-900">Your feed</h1>
       <p className="mt-1 text-sm text-gray-600">
         Recent activity from your team
       </p>

@@ -11,7 +11,7 @@ export default function LoginButton() {
     <button
       onClick={() => startTransition(() => logIn())}
       disabled={isPending}
-      className="rounded-lg bg-gray-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-gray-800 disabled:opacity-70"
+      className="rounded-lg bg-gray-900 px-4 py-1.5 text-sm font-medium text-white transition-colors enabled:hover:bg-gray-800 disabled:opacity-70"
     >
       <Spinner loading={isPending} className="size-4">
         Log in

@@ -1,6 +1,9 @@
 ---
 title: Static page variants
-description: Use rewrites to serve different prerendered pages to the same URL, based on cookies or headers from the incoming request.
+description: Serve different static content at the same URL based on cookies or headers from the incoming request.
+# description: Serve different prerendered pages to the same URL using rewrites based on cookies or headers from the incoming request.
+# description: Serve different prerendered pages at the same URL, based on cookies or headers from the incoming request.
+# description: Use rewrites to serve different prerendered pages to the same URL, based on cookies or headers from the incoming request.
 ---
 
 To cover:

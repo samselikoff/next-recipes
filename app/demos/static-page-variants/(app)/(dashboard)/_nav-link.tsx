@@ -19,8 +19,8 @@ export default function NavLink({
       href={href}
       className={`-mb-px flex items-center border-b-2 py-3 text-sm ${
         active
-          ? "border-gray-900 font-medium text-gray-900"
-          : "border-transparent text-gray-600 hover:text-gray-900"
+          ? "border-gray-900 text-gray-900"
+          : "border-transparent text-gray-500 hover:text-gray-900"
       }`}
     >
       {children}

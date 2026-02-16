@@ -1,5 +1,11 @@
 # Next recipes
 
+## Static page variants
+
+- [ ] I think I like current approach best but want to not expose the /overview URL publicly
+- [x] Don't think I should use beforeFiles. Should probably fork.
+- [ ] Prevent iframe from capturing back/forward
+
 ## Todo
 
 - [ ] Line highlighting for code snippets
