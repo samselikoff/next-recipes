@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 export async function logIn() {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
+  (await cookies()).set("userId", "123");
   (await cookies()).set("isLoggedIn", "1");
 
   redirect("/demos/static-page-variants");

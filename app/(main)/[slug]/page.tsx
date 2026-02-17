@@ -4,11 +4,17 @@ import { recipesData } from "../recipes-data";
 import { Frame } from "./Frame";
 import { Metadata } from "next";
 import { renderMarkdocFromFile } from "@/lib/markdoc/render-markdoc-from-file";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({
   params,
 }: PageProps<"/[slug]">): Promise<Metadata> {
   const { slug } = await params;
+
+  if (!recipesData.some((r) => r.slug === slug)) {
+    notFound();
+  }
+
   const { frontmatter } = await renderMarkdocFromFile(
     `/app/demos/${slug}/summary.md`,
   );
@@ -25,6 +31,11 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: PageProps<"/[slug]">) {
   const { slug } = await params;
+
+  if (!recipesData.some((r) => r.slug === slug)) {
+    notFound();
+  }
+
   const summary = await renderMarkdocFromFile(`/app/demos/${slug}/summary.md`);
   const code = await renderMarkdocFromFile(`/app/demos/${slug}/code.md`);
 

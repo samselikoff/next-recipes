@@ -11,6 +11,8 @@ To cover:
 - optimistic auth cookie
 - accept text/markdown
 
+- You can use glob routes (:path\*) for paths under a common segment name, like `/dashboard/`
+
 Sometimes you need to serve different versions of a page to different users—like showing a logged-in vs. logged-out experience—while still benefiting from static generation.
 
 With Next.js rewrites in `next.config.ts`, you can map a single public URL to different static pages based on request conditions like cookies, all while keeping your URLs clean and your pages fully static.

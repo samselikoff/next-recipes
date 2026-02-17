@@ -1,5 +1,5 @@
-import LogoutButton from "./_logout-button";
-import NavLink from "./_nav-link";
+import { LogoutButton } from "./client";
+import { NavLink } from "./client";
 
 export default function DashboardLayout({
   children,
@@ -12,9 +12,7 @@ export default function DashboardLayout({
       <header className="border-b border-gray-200 bg-white">
         <div className="mx-auto flex max-w-4xl justify-between px-8">
           <nav className="flex gap-6">
-            <NavLink href="/demos/static-page-variants/dashboard">
-              Dashboard
-            </NavLink>
+            <NavLink href="/demos/static-page-variants">Dashboard</NavLink>
             <NavLink href="/demos/static-page-variants/feed">Feed</NavLink>
             <NavLink href="/demos/static-page-variants/projects">
               Projects

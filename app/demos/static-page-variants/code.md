@@ -13,11 +13,11 @@ const nextConfig: NextConfig = {
     return {
       beforeFiles: [
         {
-          source: "/:path*",
+          source: "/",
           has: [
             { type: "cookie", key: "isLoggedIn" },
           ],
-          destination: "/dashboard/:path*",
+          destination: "/dashboard",
         },
       ],
     };

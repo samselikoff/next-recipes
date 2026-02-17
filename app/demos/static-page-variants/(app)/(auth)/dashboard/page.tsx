@@ -1,4 +1,6 @@
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { getCurrentUser } from "../data";
 
 export default function DashboardPage() {
   return (
@@ -17,6 +19,17 @@ export default function DashboardPage() {
 
 async function Stats() {
   await new Promise((resolve) => setTimeout(resolve, 1500));
+
+  const currentUser = await getCurrentUser();
+  if (!currentUser) {
+    /*
+      Could only get here if optimistic cookie was 1 but
+      there was no userId.
+
+      Redirect home + clear the stale cookie.
+    */
+    redirect("/demos/static-page-variants?stale=1");
+  }
 
   const stats = [
     { label: "Active Projects", value: "12" },
@@ -46,12 +59,9 @@ function StatsSkeleton() {
   return (
     <div className="mt-6 grid grid-cols-2 gap-4">
       {[1, 2, 3, 4].map((i) => (
-        <div
-          key={i}
-          className="rounded-lg border border-gray-200 bg-white p-4"
-        >
-          <div className="h-4 w-24 animate-pulse rounded bg-gray-200" />
-          <div className="mt-2 h-7 w-16 animate-pulse rounded bg-gray-200" />
+        <div key={i} className="rounded-lg border border-gray-200 bg-white p-4">
+          <div className="h-5 w-24 animate-pulse rounded bg-gray-200" />
+          <div className="mt-1 h-8 w-16 animate-pulse rounded bg-gray-200" />
         </div>
       ))}
     </div>
