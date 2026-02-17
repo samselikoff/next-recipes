@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <div className="relative mx-auto flex h-full min-h-dvh w-full max-w-4xl flex-col bg-white px-8">
       {/* Header */}
-      <header className="flex items-center justify-between pt-4">
+      <header className="flex items-center justify-between pt-8">
         <div className="flex items-center gap-2">
           <div className="size-7 rounded-full bg-linear-to-br from-gray-500 to-gray-950" />
           <span className="text-sm font-semibold text-gray-900">Acme</span>
@@ -44,7 +44,8 @@ export default function Page() {
               ))}
             </div>
             <p className="text-sm text-gray-600">
-              Trusted by <span className="font-medium text-gray-900">10,000+</span> teams
+              Trusted by{" "}
+              <span className="font-medium text-gray-900">10,000+</span> teams
             </p>
           </div>
         </div>

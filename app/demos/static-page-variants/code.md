@@ -34,22 +34,10 @@ export default nextConfig;
 
 ```tsx
 /*
-  This is the public marketing page, served at / to new or signed-out users.
+  The public marketing page, served at / to new or signed-out users
 */
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
-function logIn() {
-  "use server";
-
-  // Sign in as usual with formData, oath, etc.
-  // await signInUser(formData)
-
-  // Once authed, set a cookie for the optimistic rewrite
-  (await cookies()).set("isLoggedIn", "1");
-
-  redirect("/");
-}
 
 export default function Home() {
   return (
@@ -64,6 +52,18 @@ export default function Home() {
     </div>
   );
 }
+
+async function logIn() {
+  "use server";
+
+  // Sign in as usual with formData, oath, etc.
+  // await signInUser(formData)
+
+  // Once authed, set a cookie for the optimistic rewrite
+  (await cookies()).set("isLoggedIn", "1");
+
+  redirect("/");
+}
 ```
 
 {% /file %}
@@ -72,24 +72,12 @@ export default function Home() {
 
 ```tsx
 /*
-  This is the /dashboard page, served at / to signed-in users.
+  The /dashboard page, served at / to signed-in users
 */
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-
-async function logOut() {
-  "use server";
-
-  // Sign out as usual
-  await signOutCurrentUser();
-
-  // Once signed out, delete the optimistic cookie
-  (await cookies()).delete("isLoggedIn");
-
-  redirect("/");
-}
 
 export default function Dashboard() {
   return (
@@ -102,27 +90,27 @@ export default function Dashboard() {
       </header>
 
       <main>
-        <h1>Your Feed</h1>
-        <Suspense fallback={<p>Loading...</p>}>
-          <Feed />
+        <h1>Dashboard</h1>
+        <Suspense
+          fallback={<ActivityGridFallback />}
+        >
+          <ActivityGrid />
         </Suspense>
       </main>
     </div>
   );
 }
 
-async function Feed() {
-  const items = await getActivityFeed();
+async function logOut() {
+  "use server";
 
-  return (
-    <ul>
-      {items.map((item) => (
-        <li key={item.id}>
-          {item.user} {item.action} {item.target}
-        </li>
-      ))}
-    </ul>
-  );
+  // Sign out as usual
+  await signOutCurrentUser();
+
+  // Once signed out, delete the optimistic cookie
+  (await cookies()).delete("isLoggedIn");
+
+  redirect("/");
 }
 ```
 
