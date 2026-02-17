@@ -15,9 +15,7 @@ const nextConfig: NextConfig = {
       beforeFiles: [
         {
           source: "/",
-          has: [
-            { type: "cookie", key: "isLoggedIn" },
-          ],
+          has: [{ type: "cookie", key: "isLoggedIn" }],
           destination: "/dashboard",
         },
       ],
@@ -43,11 +41,10 @@ export default function Home() {
   return (
     <div>
       <h1>Build faster, ship smarter</h1>
-      <p>
-        The all-in-one platform for modern teams.
-      </p>
+      <p>The all-in-one platform for modern teams.</p>
+
       <form action={logIn}>
-        <button type="submit">Log in</button>
+        <button>Log in</button>
       </form>
     </div>
   );
@@ -57,7 +54,7 @@ async function logIn() {
   "use server";
 
   // Sign in as usual with formData, oath, etc.
-  // await signInUser(formData)
+  await signInUser();
 
   // Once authed, set a cookie for the optimistic rewrite
   (await cookies()).set("isLoggedIn", "1");
@@ -85,15 +82,13 @@ export default function Dashboard() {
       <header>
         <span>Acme</span>
         <form action={logOut}>
-          <button type="submit">Log out</button>
+          <button>Log out</button>
         </form>
       </header>
 
       <main>
         <h1>Dashboard</h1>
-        <Suspense
-          fallback={<ActivityGridFallback />}
-        >
+        <Suspense fallback={<ActivityGridFallback />}>
           <ActivityGrid />
         </Suspense>
       </main>

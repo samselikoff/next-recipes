@@ -18,7 +18,7 @@ export default function DashboardPage() {
 }
 
 async function Stats() {
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const currentUser = await getCurrentUser();
   if (!currentUser) {

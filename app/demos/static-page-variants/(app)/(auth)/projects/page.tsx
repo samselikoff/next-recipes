@@ -4,7 +4,9 @@ export default function ProjectsPage() {
   return (
     <>
       <h1 className="text-xl font-semibold text-gray-900">Projects</h1>
-      <p className="mt-1 text-sm text-gray-600">Manage your team's projects</p>
+      <p className="mt-1 text-sm text-gray-600">
+        Manage your team&apos;s projects
+      </p>
 
       <Suspense fallback={<ProjectsSkeleton />}>
         <Projects />
@@ -14,7 +16,7 @@ export default function ProjectsPage() {
 }
 
 async function Projects() {
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const projects = [
     { id: 1, name: "api-service", status: "Active", deploys: 47 },
@@ -53,10 +55,7 @@ function ProjectsSkeleton() {
   return (
     <div className="mt-6 divide-y divide-gray-200 rounded-lg border border-gray-200 bg-white">
       {[1, 2, 3, 4].map((i) => (
-        <div
-          key={i}
-          className="flex items-center justify-between px-4 py-3"
-        >
+        <div key={i} className="flex items-center justify-between px-4 py-3">
           <div className="space-y-2">
             <div className="h-4 w-32 animate-pulse rounded bg-gray-200" />
             <div className="h-3 w-20 animate-pulse rounded bg-gray-200" />
