@@ -1,7 +1,5 @@
 import Image from "next/image";
 import LoginButton from "./client";
-import Link from "next/link";
-// import Link from "next/link";
 
 export default function Page() {
   return (
@@ -26,19 +24,28 @@ export default function Page() {
             collaborate in real-time, and deliver exceptional results.
           </p>
 
-          <div className="mt-6 flex gap-3">
-            <Link
-              href="#"
-              className="rounded-lg bg-gray-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
-            >
-              Get started
-            </Link>
-            <Link
-              href="#"
-              className="rounded-lg border border-gray-300 px-5 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
-            >
-              Learn more
-            </Link>
+          <div className="mt-6 flex items-center gap-3">
+            <div className="flex -space-x-2">
+              {[
+                "photo-1494790108377-be9c29b29330",
+                "photo-1507003211169-0a1dd7228f2d",
+                "photo-1534528741775-53994a69daeb",
+                "photo-1438761681033-6461ffad8d80",
+              ].map((id) => (
+                <Image
+                  key={id}
+                  src={`https://images.unsplash.com/${id}?w=64&h=64&fit=crop&crop=face`}
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="rounded-full ring-2 ring-white grayscale"
+                  unoptimized
+                />
+              ))}
+            </div>
+            <p className="text-sm text-gray-600">
+              Trusted by <span className="font-medium text-gray-900">10,000+</span> teams
+            </p>
           </div>
         </div>
         <div className="hidden w-80 sm:block">
@@ -48,7 +55,7 @@ export default function Page() {
             alt="Team collaborating"
             width={320}
             height={200}
-            className="rounded-xl object-cover shadow-lg"
+            className="rounded-xl object-cover shadow-lg grayscale"
             unoptimized
           />
         </div>
