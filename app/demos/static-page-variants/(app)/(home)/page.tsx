@@ -1,5 +1,6 @@
 import Image from "next/image";
 import LoginButton from "./client";
+import Link from "next/link";
 // import Link from "next/link";
 
 export default function Page() {
@@ -25,7 +26,7 @@ export default function Page() {
             collaborate in real-time, and deliver exceptional results.
           </p>
 
-          {/* <div className="mt-6 flex gap-3">
+          <div className="mt-6 flex gap-3">
             <Link
               href="#"
               className="rounded-lg bg-gray-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
@@ -38,7 +39,7 @@ export default function Page() {
             >
               Learn more
             </Link>
-          </div> */}
+          </div>
         </div>
         <div className="hidden w-80 sm:block">
           <Image

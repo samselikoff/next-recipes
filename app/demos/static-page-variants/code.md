@@ -7,7 +7,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /*
-    Use an optimistic cookie to route signed-in users to the dashboard page
+    A rewrite based on an optimistic cookie lets you serve /dashboard's
+    static content to signed-in users when they visit /.
   */
   async rewrites() {
     return {
@@ -29,7 +30,7 @@ export default nextConfig;
 
 {% /file %}
 
-{% file name="app/home/page.tsx" %}
+{% file name="app/page.tsx" %}
 
 ```tsx
 /*
@@ -67,11 +68,11 @@ export default function Home() {
 
 {% /file %}
 
-{% file name="app/page.tsx" %}
+{% file name="app/dashboard/page.tsx" %}
 
 ```tsx
 /*
-  This is the main app, served at / to signed-in users.
+  This is the /dashboard page, served at / to signed-in users.
 */
 
 import { cookies } from "next/headers";
@@ -84,7 +85,7 @@ async function logOut() {
   // Sign out as usual
   await signOutCurrentUser();
 
-  // Once signed out, delete the cookie
+  // Once signed out, delete the optimistic cookie
   (await cookies()).delete("isLoggedIn");
 
   redirect("/");
