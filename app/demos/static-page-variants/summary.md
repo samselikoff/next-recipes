@@ -1,13 +1,57 @@
 ---
 title: Static page variants
 description: Serve different static content to the same URL based on cookies or headers from the incoming request.
-# description: Serve different prerendered pages to the same URL using rewrites based on cookies or headers from the incoming request.
-# description: Serve different prerendered pages at the same URL, based on cookies or headers from the incoming request.
-# description: Use rewrites to serve different prerendered pages to the same URL, based on cookies or headers from the incoming request.
+---
+
+Let's say you're building a site like the demo above, where the homepage looks entirely different for signed-in vs. signed-out users.
+
+No problem! In Next, we can just render this page's content based on whether we have an authenticated user:
+
+```tsx
+// app/page.tsx
+export default async function Page() {
+  const user = await getCurrentUser();
+
+  return user ? <Dashboard /> : <Home />;
+}
+```
+
+This works great—but because `getCurrentUser` depends on cookies from the request, this page will always be fully rendered from scratch for each new visit.
+
+Next's ability to prerender the static parts of different routes and serve them instantly from a CDN is one of its flagship features. But because these two versions of the homepage share little UI, we don't get that benefit for our app's most-visited URL.
+
+---
+
+To fix this, we can define two separate routes that each have their own prerendered static content. Then, we can use rewrites to map a single public URL to the appropriate page based on cookies from the incoming request.
+
+Let's start by making the homepage render only the public content:
+
+```tsx
+// app/page.tsx
+export default async function Page() {
+  return (
+    <div>
+      <header>
+        <span>Acme</span>
+      </header>
+
+      <section>
+        <h1>Build faster, ship smarter</h1>
+        <p>
+          The all-in-one platform for modern teams.
+        </p>
+      </section>
+    </div>
+  );
+}
+```
+
 ---
 
 To cover:
 
+- Hiding the duplicate URL
+- /:path\* globs
 - optimistic auth cookie
 - accept text/markdown
 
@@ -29,13 +73,11 @@ const nextConfig: NextConfig = {
       {
         source: "/dashboard",
         has: [{ type: "cookie", key: "token" }],
-        destination:
-          "/variants/logged-in/dashboard",
+        destination: "/variants/logged-in/dashboard",
       },
       {
         source: "/dashboard",
-        destination:
-          "/variants/logged-out/dashboard",
+        destination: "/variants/logged-out/dashboard",
       },
     ];
   },

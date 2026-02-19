@@ -12,7 +12,7 @@ export function Browser({
 }) {
   // Strip /demos/[slug] prefix to show cleaner URL like "demo.app/feed"
   const displayPath = url.replace(/^\/demos\/[^/]+/, "");
-  const displayUrl = `demo.app${displayPath}`;
+  const displayUrl = `acme.com${displayPath}`;
   return (
     <div className="flex h-full w-full flex-col rounded-lg">
       <div className="relative flex w-full items-center justify-center rounded-t-md border-b border-gray-900/5 bg-gray-100 px-4 py-2">
