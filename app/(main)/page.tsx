@@ -2,7 +2,6 @@ import Link from "next/link";
 import { recipesData } from "./recipes-data";
 
 export default async function Home() {
-  // await new Promise((resolve) => setTimeout(resolve, 2_000));
   return (
     <div className="mx-auto mt-8 max-w-xl px-4 md:mt-20">
       <h1 className="text-lg">

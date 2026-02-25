@@ -7,4 +7,8 @@ export const recipesData = [
     title: "Sharing data with Client Components",
     slug: "sharing-data-with-client-components",
   },
+  {
+    title: "Static page variants",
+    slug: "static-page-variants",
+  },
 ];
